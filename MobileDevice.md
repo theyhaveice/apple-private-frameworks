@@ -245,7 +245,7 @@ AMDeviceNotificationSubscribeWithOptions(deviceCallback, 0, 0, NULL, &notificati
 ```swift
 let udidRaw = AMDeviceCopyDeviceIdentifier(device)
 if let udid = udidRaw?.takeRetainedValue() as? String {
-    print("UDID: \(udid)")
+    print("UDID: (udid)")
 }
 ```
 
@@ -298,7 +298,7 @@ You can query specific keys or dump entire dictionaries by passing `nil` as the 
 let batteryDomain = "com.apple.mobile.battery" as CFString
 let capacityRaw = AMDeviceCopyValue(device, batteryDomain, "BatteryCurrentCapacity" as CFString)
 if let capacity = capacityRaw?.takeRetainedValue() as? NSNumber {
-    print("Battery: \(capacity)%")
+    print("Battery: (capacity)%")
 }
 
 // Dump an entire domain dictionary
@@ -331,7 +331,7 @@ This example assumes you have already connected to the device and started a sess
 ```swift
 let nameRaw = AMDeviceCopyValue(device, nil, "DeviceName" as CFString)
 if let deviceName = nameRaw?.takeRetainedValue() as? String {
-    print("Device Name: \(deviceName)")
+    print("Device Name: (deviceName)")
 }
 ```
 
@@ -349,7 +349,7 @@ The current iOS software version installed on the device is stored in the Root d
 ```swift
 let versionRaw = AMDeviceCopyValue(device, nil, "ProductVersion" as CFString)
 if let iOSVersion = versionRaw?.takeRetainedValue() as? String {
-    print("iOS Version: \(iOSVersion)")
+    print("iOS Version: (iOSVersion)")
 }
 ```
 
@@ -367,7 +367,7 @@ The Wi-Fi MAC Address is stored in the Root domain under the `WiFiAddress` key.
 ```swift
 let wifiRaw = AMDeviceCopyValue(device, nil, "WiFiAddress" as CFString)
 if let wifiAddress = wifiRaw?.takeRetainedValue() as? String {
-    print("Wi-Fi MAC: \(wifiAddress)")
+    print("Wi-Fi MAC: (wifiAddress)")
 }
 ```
 
@@ -401,6 +401,165 @@ NSNumber *capacityBytes = (__bridge_transfer NSNumber *)capacityRaw;
 if (capacityBytes) {
     double capacityGB = [capacityBytes doubleValue] / 1000000000.0;
     NSLog(@"Total Disk: %.2f GB", capacityGB);
+}
+```
+
+
+### Forcing the Device into Recovery Mode
+This will instantly kick the connected device into Recovery Mode (the 'Connect to iTunes' screen).
+
+**Swift:**
+```swift
+let result = AMDeviceEnterRecovery(device)
+if result == 0 {
+    print("Device is rebooting into Recovery Mode!")
+}
+```
+
+**Objective-C:**
+```objc
+int result = AMDeviceEnterRecovery(device);
+if (result == 0) {
+    NSLog(@"Device is rebooting into Recovery Mode!");
+}
+```
+
+### Retrieving Paired Apple Watches
+Returns a dictionary containing information about any Apple Watches actively paired to this iPhone.
+
+**Swift:**
+```swift
+let watchRaw = AMDeviceCopyPairedWatch(device)
+if let watchInfo = watchRaw?.takeRetainedValue() as? [String: Any] {
+    print("Paired Watch Info: \(watchInfo)")
+}
+```
+
+**Objective-C:**
+```objc
+CFTypeRef watchRaw = AMDeviceCopyPairedWatch(device);
+NSDictionary *watchInfo = (__bridge_transfer NSDictionary *)watchRaw;
+NSLog(@"Paired Watch Info: %@", watchInfo);
+```
+
+### Dumping Provisioning Profiles
+Fetches all `.mobileprovision` profiles currently installed on the device (useful for checking sideloading signatures).
+
+**Swift:**
+```swift
+let profilesRaw = AMDeviceCopyProvisioningProfiles(device)
+if let profiles = profilesRaw?.takeRetainedValue() as? [Any] {
+    print("Found \(profiles.count) provisioning profiles.")
+}
+```
+
+**Objective-C:**
+```objc
+CFTypeRef profilesRaw = AMDeviceCopyProvisioningProfiles(device);
+NSArray *profiles = (__bridge_transfer NSArray *)profilesRaw;
+NSLog(@"Found %lu provisioning profiles.", (unsigned long)profiles.count);
+```
+
+### Deactivating the Device
+This forcefully deactivates the iPhone, throwing it back to the "Hello" setup screen requiring Activation over Wi-Fi/Cellular.
+
+**Swift:**
+```swift
+let result = AMDeviceDeactivate(device)
+if result == 0 {
+    print("Device successfully deactivated.")
+}
+```
+
+**Objective-C:**
+```objc
+int result = AMDeviceDeactivate(device);
+if (result == 0) {
+    NSLog(@"Device successfully deactivated.");
+}
+```
+
+### Unpairing the Device
+Removes the cryptographic pairing record from the device, forcing the user to "Trust this Computer" again.
+
+**Swift:**
+```swift
+let result = AMDeviceUnpair(device)
+if result == 0 {
+    print("Device pairing has been revoked.")
+}
+```
+
+**Objective-C:**
+```objc
+int result = AMDeviceUnpair(device);
+if (result == 0) {
+    NSLog(@"Device pairing has been revoked.");
+}
+```
+
+### Checking the Connection Interface (USB vs Wi-Fi)
+Determines whether the device is currently communicating over a physical cable or over the network.
+
+**Swift:**
+```swift
+let interfaceType = AMDeviceGetInterfaceType(device)
+if interfaceType == 1 {
+    print("Connected via USB")
+} else if interfaceType == 2 {
+    print("Connected via Wi-Fi")
+}
+```
+
+**Objective-C:**
+```objc
+int interfaceType = AMDeviceGetInterfaceType(device);
+if (interfaceType == 1) {
+    NSLog(@"Connected via USB");
+} else if (interfaceType == 2) {
+    NSLog(@"Connected via Wi-Fi");
+}
+```
+
+### Getting USB Interface Speed
+Retrieves the negotiated connection speed (e.g. 480 Mbps for USB 2.0 Lightning, or higher for USB-C iPads/iPhones).
+
+**Swift:**
+```swift
+let speed = AMDeviceGetInterfaceSpeed(device)
+print("Interface speed: \(speed)")
+```
+
+**Objective-C:**
+```objc
+int speed = AMDeviceGetInterfaceSpeed(device);
+NSLog(@"Interface speed: %d", speed);
+```
+
+### Tunneling into App Sandboxes (House Arrest)
+This requests the lockdown daemon to spawn a `com.apple.mobile.house_arrest` service targeting a specific app bundle. Once successful, it returns a file descriptor you can use to browse the app's internal filesystem (Documents/Library).
+
+**Swift:**
+```swift
+var fdOut: Int32 = 0
+let bundleID = "com.apple.Pages" as CFString
+
+let result = AMDeviceCreateHouseArrestService(device, bundleID, nil, &fdOut)
+if result == 0 {
+    print("Successfully mounted House Arrest! File descriptor: \(fdOut)")
+    // You can now communicate with the fdOut socket using AFC (Apple File Conduit)
+}
+```
+
+**Objective-C:**
+```objc
+int fdOut = 0;
+CFStringRef bundleID = CFSTR("com.apple.Pages");
+
+int result = AMDeviceCreateHouseArrestService(device, bundleID, NULL, &fdOut);
+if (result == 0) {
+    NSLog(@"Successfully mounted House Arrest! File descriptor: %d", fdOut);
+    // You can now communicate with the fdOut socket using AFC
 }
 ```
 
