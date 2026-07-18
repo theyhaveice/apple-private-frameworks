@@ -71,7 +71,7 @@ extern int AMDeviceNotificationSubscribeWithOptions(am_device_notification_callb
 | `AMDeviceCopyDeviceIdentifier` | Retrieves the unique identifier (UDID) of the connected device. |
 | `AMDeviceCopyDeviceLocation` | Returns a copy of the device location. |
 | `AMDeviceCopyDeviceUSBSerialNumber` | Returns a copy of the device u s b serial number. |
-| `AMDeviceCopyFDRPreflightOptions` | Returns a copy of the f d r preflight options. |
+| `AMDeviceCopyFDRPreflightOptions` | Returns a copy of the FDR preflight options. |
 | `AMDeviceCopyMountedDevicesList` | Returns a copy of the mounted devices list. |
 | `AMDeviceCopyMultipleValuesWithError` | Returns a copy of the multiple values with error. |
 | `AMDeviceCopyPairedCompanion` | Returns a copy of the paired companion. |
@@ -93,21 +93,21 @@ extern int AMDeviceNotificationSubscribeWithOptions(am_device_notification_callb
 | `AMDeviceCreateCopy` | Creates copy. |
 | `AMDeviceCreateFromProperties` | Creates from properties. |
 | `AMDeviceCreateHouseArrestService` | Creates house arrest service. |
-| `AMDeviceCreateSRPConnection` | Creates s r p connection. |
+| `AMDeviceCreateSRPConnection` | Creates SRP connection. |
 | `AMDeviceCreateWakeupToken` | Creates wakeup token. |
 | `AMDeviceCreateWithRemoteDevice` | Creates with remote device. |
 | `AMDeviceCreateWithRemoteDeviceWithError` | Creates with remote device with error. |
 | `AMDeviceDeactivate` | Deactivate. |
-| `AMDeviceDeleteHostPairingRecordForUDID` | Removes or deletes host pairing record for u d i d. |
+| `AMDeviceDeleteHostPairingRecordForUDID` | Removes or deletes host pairing record for UDID. |
 | `AMDeviceDisconnect` | Closes the raw connection to the device. |
 | `AMDeviceEnterRecovery` | Enter recovery. |
 | `AMDeviceExtendedPairWithOptions` | Extended pair with options. |
-| `AMDeviceGetConnectionID` | Retrieves the connection i d. |
+| `AMDeviceGetConnectionID` | Retrieves the connection ID. |
 | `AMDeviceGetInterfaceSpeed` | Retrieves the interface speed. |
 | `AMDeviceGetInterfaceType` | Retrieves the interface type. |
 | `AMDeviceGetLocalOrRemoteOffsetToResume` | Retrieves the local or remote offset to resume. |
 | `AMDeviceGetName` | Retrieves the name. |
-| `AMDeviceGetTypeID` | Retrieves the type i d. |
+| `AMDeviceGetTypeID` | Retrieves the type ID. |
 | `AMDeviceGetUserInfo` | Retrieves the user info. |
 | `AMDeviceGetWirelessBuddyFlags` | Retrieves the wireless buddy flags. |
 | `AMDeviceImageMounted` | Image mounted. |
@@ -117,7 +117,7 @@ extern int AMDeviceNotificationSubscribeWithOptions(am_device_notification_callb
 | `AMDeviceIsBackedByRemotePairing` | Checks if the device backed by remote pairing. |
 | `AMDeviceIsPaired` | Checks if the iOS device has been "Trusted" by this computer. |
 | `AMDeviceIsValid` | Checks if the device valid. |
-| `AMDeviceIsWiFiPairableRef` | Checks if the device wi fi pairable ref. |
+| `AMDeviceIsWiFiPairableRef` | Checks if the device Wi-Fi pairable ref. |
 | `AMDeviceLookupApplicationArchives` | Lookup application archives. |
 | `AMDeviceLookupApplications` | Lookup applications. |
 | `AMDeviceMountImage` | Mount image. |
@@ -130,13 +130,13 @@ extern int AMDeviceNotificationSubscribeWithOptions(am_device_notification_callb
 | `AMDevicePairWithCallback` | Pair with callback. |
 | `AMDevicePairWithOptions` | Pair with options. |
 | `AMDevicePowerAssertionCreate` | Power assertion create. |
-| `AMDevicePowerAssertionGetTypeID` | Power assertion get type i d. |
+| `AMDevicePowerAssertionGetTypeID` | Power assertion get type ID. |
 | `AMDevicePreflightOperationCreate` | Preflight operation create. |
 | `AMDevicePreflightOperationGetRunLoopSource` | Preflight operation get run loop source. |
-| `AMDevicePreflightOperationGetTypeID` | Preflight operation get type i d. |
+| `AMDevicePreflightOperationGetTypeID` | Preflight operation get type ID. |
 | `AMDevicePreflightOperationInvalidate` | Preflight operation invalidate. |
-| `AMDeviceRegisterForCUNotificationsWithOptions` | Register for c u notifications with options. |
-| `AMDeviceRegisterForCUStateNotificationsWithOptions` | Register for c u state notifications with options. |
+| `AMDeviceRegisterForCUNotificationsWithOptions` | Register for CU notifications with options. |
+| `AMDeviceRegisterForCUStateNotificationsWithOptions` | Register for CU state notifications with options. |
 | `AMDeviceRelayFile` | Relay file. |
 | `AMDeviceRelease` | Release. |
 | `AMDeviceRemoteCopyCryptexNonce` | Remotely copy cryptex nonce. |
@@ -147,9 +147,9 @@ extern int AMDeviceNotificationSubscribeWithOptions(am_device_notification_callb
 | `AMDeviceRemoteCopyPersonalizationNonce` | Remotely copy personalization nonce. |
 | `AMDeviceRemoteCopyPersonalizationNonceWithOptions` | Remotely copy personalization nonce with options. |
 | `AMDeviceRemoteImageMounted` | Remotely image mounted. |
-| `AMDeviceRemoteImageMountedMacOS` | Remotely image mounted mac o s. |
+| `AMDeviceRemoteImageMountedMacOS` | Remotely image mounted macOS. |
 | `AMDeviceRemoteMountImage` | Remotely mount image. |
-| `AMDeviceRemoteMountImageMacOS` | Remotely mount image mac o s. |
+| `AMDeviceRemoteMountImageMacOS` | Remotely mount image macOS. |
 | `AMDeviceRemoteMountPersonalizedBundle` | Remotely mount personalized bundle. |
 | `AMDeviceRemoteRollCryptexNonce` | Remotely roll cryptex nonce. |
 | `AMDeviceRemoteRollPersonalizationNonce` | Remotely roll personalization nonce. |
@@ -183,9 +183,9 @@ extern int AMDeviceNotificationSubscribeWithOptions(am_device_notification_callb
 | `AMDeviceStopSession` | Safely terminates the active `lockdownd` session. |
 | `AMDeviceTransferApplication` | Transfer application. |
 | `AMDeviceTransferPath` | Transfer path. |
-| `AMDeviceUSBDeviceID` | Usb device i d. |
-| `AMDeviceUSBLocationID` | Usb location i d. |
-| `AMDeviceUSBProductID` | Usb product i d. |
+| `AMDeviceUSBDeviceID` | Usb device ID. |
+| `AMDeviceUSBLocationID` | Usb location ID. |
+| `AMDeviceUSBProductID` | Usb product ID. |
 | `AMDeviceUninstallApplication` | Removes or deletes all application. |
 | `AMDeviceUnmountImage` | Unmount image. |
 | `AMDeviceUnmountImageOnHost` | Unmount image on host. |
@@ -194,11 +194,11 @@ extern int AMDeviceNotificationSubscribeWithOptions(am_device_notification_callb
 | `AMDeviceValidatePairing` | Validates the cryptographic pairing records before starting a session. |
 | `AMDeviceVerifySRPConnection` | Verify srp connection. |
 | `AMDeviceWakeupOperationCreateWithToken` | Wakeup operation create with token. |
-| `AMDeviceWakeupOperationGetTypeID` | Wakeup operation get type i d. |
+| `AMDeviceWakeupOperationGetTypeID` | Wakeup operation get type ID. |
 | `AMDeviceWakeupOperationInvalidate` | Wakeup operation invalidate. |
 | `AMDeviceWakeupOperationSchedule` | Wakeup operation schedule. |
 | `AMDeviceWakeupUsingToken` | Wakeup using token. |
-| `AMDeviceWiFiPairableCopyRealUniqueDeviceID` | Wifi pairable copy real unique device i d. |
+| `AMDeviceWiFiPairableCopyRealUniqueDeviceID` | Wifi pairable copy real unique device ID. |
 
 ## Static Function Usages
 
