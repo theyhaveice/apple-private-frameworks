@@ -46,8 +46,10 @@ extern int AMDeviceValidatePairing(struct am_device *device);
 extern int AMDeviceStartSession(struct am_device *device);
 extern int AMDeviceStopSession(struct am_device *device);
 extern CFTypeRef AMDeviceCopyValue(struct am_device *device, CFStringRef domain, CFStringRef key);
+extern int AMDeviceSetValue(struct am_device *device, CFStringRef domain, CFStringRef key, CFTypeRef value);
 extern void AMDeviceNotificationSubscribe(am_device_notification_callback callback, int unused0, int unused1, int unused2, void **notificationOut);
 extern int AMDeviceNotificationSubscribeWithOptions(am_device_notification_callback callback, int unused0, int interfaceType, void *unused1, void **notificationOut, CFDictionaryRef options);
+// etc...
 ```
 
 ## Framework Location
@@ -70,7 +72,7 @@ extern int AMDeviceNotificationSubscribeWithOptions(am_device_notification_callb
 | `AMDeviceCopyDeveloperModeStatus` | Returns a copy of the developer mode status. |
 | `AMDeviceCopyDeviceIdentifier` | Retrieves the unique identifier (UDID) of the connected device. |
 | `AMDeviceCopyDeviceLocation` | Returns a copy of the device location. |
-| `AMDeviceCopyDeviceUSBSerialNumber` | Returns a copy of the device u s b serial number. |
+| `AMDeviceCopyDeviceUSBSerialNumber` | Returns a copy of the device USB serial number. |
 | `AMDeviceCopyFDRPreflightOptions` | Returns a copy of the FDR preflight options. |
 | `AMDeviceCopyMountedDevicesList` | Returns a copy of the mounted devices list. |
 | `AMDeviceCopyMultipleValuesWithError` | Returns a copy of the multiple values with error. |
